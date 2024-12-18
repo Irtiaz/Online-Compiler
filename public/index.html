@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Online Compiler</title>
+</head>
+<body>
+    <h1>Online Compiler</h1>
+    <textarea id="codeArea" rows="10" cols="50">// Write your C code here</textarea>
+    <br>
+    <textarea id="inputArea" rows="5" cols="50" placeholder="Enter input for your program here"></textarea>
+    <br>
+    <button id="compileButton">Compile and Run</button>
+    <pre id="output"></pre>
+
+    <script>
+        document.getElementById('compileButton').addEventListener('click', async () => {
+            const code = document.getElementById('codeArea').value;
+            const input = document.getElementById('inputArea').value;
+
+            const response = await fetch('/compile', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ code, input })
+            });
+
+            const result = await response.json();
+            document.getElementById('output').textContent = result.output;
+        });
+    </script>
+</body>
+</html>
